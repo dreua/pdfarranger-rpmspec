@@ -2,7 +2,7 @@
 
 Name:           pdfshuffler
 Version:        0.3.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 Group:          Applications/Publishing
@@ -14,13 +14,13 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 
 BuildRequires:  python
-BuildRequires:  pygtk2-devel
-BuildRequires:  pyPdf
-BuildRequires:  ghostscript-devel
 BuildRequires:  python-setuptools-devel
-
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
+
+Requires:       pygtk2
+Requires:       pyPdf
+Requires:       ghostscript
 
 
 %description
@@ -62,6 +62,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sat Feb 14 2009 Fabian Affolter <fabian@bernewireless.net> - 0.3.1-3
+- Fixed requirements
+
 * Sat Jan 31 2009 Fabian Affolter <fabian@bernewireless.net> - 0.3.1-2
 - Fixed typo in summary and .desktop file
 
