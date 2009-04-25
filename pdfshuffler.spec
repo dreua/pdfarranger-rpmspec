@@ -1,8 +1,8 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           pdfshuffler
-Version:        0.3.1
-Release:        3%{?dist}
+Version:        0.4
+Release:        1%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 Group:          Applications/Publishing
@@ -62,6 +62,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sat Apr 25 2009 Fabian Affolter <fabian@bernewireless.net> - 0.4-1
+- Updated to new upstream version 0.4
+
 * Sat Feb 14 2009 Fabian Affolter <fabian@bernewireless.net> - 0.3.1-3
 - Fixed requirements
 
