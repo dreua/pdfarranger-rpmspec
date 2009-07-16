@@ -12,7 +12,7 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)     
 BuildArch:      noarch
 
-BuildRequires:  python
+BuildRequires:  python-devel
 BuildRequires:  python-setuptools-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
