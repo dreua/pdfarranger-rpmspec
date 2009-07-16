@@ -1,7 +1,7 @@
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           pdfshuffler
-Version:        0.4
+Version:        0.4.2
 Release:        1%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
@@ -9,18 +9,17 @@ Group:          Applications/Publishing
 License:        GPLv2+
 URL:            http://sourceforge.net/projects/pdfshuffler/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Patch0:         %{name}-desktop.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)     
 BuildArch:      noarch
 
 BuildRequires:  python
-BuildRequires:  python-setuptools-devel
+#BuildRequires:  python-setuptools-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 
 Requires:       pygtk2
 Requires:       pyPdf
-Requires:       ghostscript
+Requires:       pypoppler
 
 
 %description
@@ -31,17 +30,15 @@ pages using an interactive and intuitive graphical interface.
 
 %prep
 %setup -q
-chmod -x {AUTHORS,ChangeLog,COPYING,README,TODO,doc/pdfshuffler.1}
-%patch0 -p0 -b .desktop
 
 
 %build
-python setup.py build
+%{__python} setup.py build
 
 
 %install
 rm -rf %{buildroot}
-python setup.py install --skip-build --root %{buildroot}
+%{__python} setup.py install --root %{buildroot}
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %find_lang %{name}
 
@@ -62,6 +59,14 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Jul 17 2009 Fabian Affolter <fabian@bernewireless.net> - 0.4.2-1
+- Updated to new upstream version 0.4.2
+
+* Sat Apr 25 2009 Fabian Affolter <fabian@bernewireless.net> - 0.4-2
+- Removed patch0
+- Removed permission changing of doc files
+- Removed ghostscript and added pypoppler as a requirement
+
 * Sat Apr 25 2009 Fabian Affolter <fabian@bernewireless.net> - 0.4-1
 - Updated to new upstream version 0.4
 
