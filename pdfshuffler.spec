@@ -2,7 +2,7 @@
 
 Name:           pdfshuffler
 Version:        0.4.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 Group:          Applications/Publishing
@@ -59,6 +59,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sat Jul 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.4.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Fri Jul 17 2009 Fabian Affolter <fabian@bernewireless.net> - 0.4.2-1
 - Updated to new upstream version 0.4.2
 
