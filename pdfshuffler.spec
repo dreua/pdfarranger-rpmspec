@@ -2,7 +2,7 @@
 
 Name:           pdfshuffler
 Version:        0.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 Group:          Applications/Publishing
@@ -59,6 +59,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Jul 21 2010 David Malcolm <dmalcolm@redhat.com> - 0.5-2
+- Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
+
 * Mon Mar 15 2010 Fabian Affolter <fabian@bernewireless.net> - 0.5-1
 - Updated to new upstream version 0.5
 
