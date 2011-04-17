@@ -1,8 +1,10 @@
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
+%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
+%endif
 
 Name:           pdfshuffler
-Version:        0.5
-Release:        3%{?dist}
+Version:        0.5.1
+Release:        1%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 Group:          Applications/Publishing
@@ -12,7 +14,7 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)     
 BuildArch:      noarch
 
-BuildRequires:  python-devel
+BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -59,6 +61,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Apr 17 2011 Fabian Affolter <fabian@bernewireless.net> - 0.5.1-1
+- Updated to new upstream version 0.5.1
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
