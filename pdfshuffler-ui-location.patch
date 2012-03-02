@@ -1,6 +1,3 @@
---- a/pdfshuffler-ui-location.patch	
-+++ a/pdfshuffler-ui-location.patch	
-@@ -0,0 +1,12 @@ 
 diff -up ./pdfshuffler/pdfshuffler.py.orig ./pdfshuffler/pdfshuffler.py
 --- ./pdfshuffler/pdfshuffler.py.orig	2012-01-26 14:10:15.706139193 -0600
 @@ -110,7 +110,7 @@ class PdfShuffler:
