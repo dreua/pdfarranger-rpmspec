@@ -2,7 +2,7 @@
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 %endif
 
-%global svndate 20120130
+%global svndate 20120302
 %global svnrev  64
 
 Name:           pdfshuffler
@@ -71,7 +71,7 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Fri Feb 02 2012 Fabian Affolter <mail@fabian-affolter.ch>  - 0.6.0-0.2.20120130svn64
+* Fri Feb 02 2012 Fabian Affolter <mail@fabian-affolter.ch>  - 0.6.0-0.2.20120302svn64
 - Minor changes
 
 * Thu Jan 26 2012 Jason L Tibbitts III <tibbs@math.uh.edu> - 0.6.0-0.1.20120126svn64
