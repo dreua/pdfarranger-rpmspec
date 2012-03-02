@@ -11,3 +11,4 @@
 +         if not os.path.exists(ui_path):
 +             ui_path = '/usr/local/share/applications/pdfshuffler/pdfshuffler.ui'
 +             if not os.path.exists(ui_path):
+
