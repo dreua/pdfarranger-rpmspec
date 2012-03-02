@@ -1,5 +1,5 @@
---- pdfshuffler/pdfshuffler/pdfshuffler.py.orig	2012-03-02 11:01:32.675784575 +0100
-+++ pdfshuffler/pdfshuffler/pdfshuffler.py	2012-03-02 11:05:41.364339097 +0100
+--- pdfshuffler/pdfshuffler.py.orig	2012-03-02 11:01:32.675784575 +0100
++++ pdfshuffler/pdfshuffler.py	2012-03-02 11:05:41.364339097 +0100
 @@ -110,7 +110,7 @@ class PdfShuffler:
              print(_("Can't load icon. Application is not installed correctly."))
  
