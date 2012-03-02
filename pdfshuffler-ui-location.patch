@@ -5,7 +5,7 @@
  
          # Import the user interface file, trying different possible locations
 -        ui_path = '/usr/share/pdfshuffler/pdfshuffler.ui'
-+        #ui_path = '/usr/share/pdfshuffler/pdfshuffler.ui'
++        ui_path = '/usr/share/applications/pdfshuffler/pdfshuffler.ui'
          if not os.path.exists(ui_path):
              ui_path = '/usr/local/share/applications/pdfshuffler/pdfshuffler.ui'
              if not os.path.exists(ui_path):
