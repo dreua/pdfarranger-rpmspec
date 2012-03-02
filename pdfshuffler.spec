@@ -2,15 +2,22 @@
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 %endif
 
+%global svndate 20120126
+%global svnrev  64
+
 Name:           pdfshuffler
-Version:        0.5.1
-Release:        2%{?dist}
+Version:        0.6.0
+#Release:        1%{?dist}
+Release:        0.1.%{svndate}svn%{svnrev}%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 Group:          Applications/Publishing
 License:        GPLv2+
 URL:            http://sourceforge.net/projects/pdfshuffler/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+#Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source0:        pdfshuffler-%{svndate}svn.tar.xz
+Source1:        pdfshuffler-svn-checkout.sh
+Patch0:         pdfshuffler-ui-location.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)     
 BuildArch:      noarch
 
@@ -31,7 +38,8 @@ pages using an interactive and intuitive graphical interface.
 
 
 %prep
-%setup -q
+%setup -q -n pdfshuffler
+%patch0 -b .uilocation
 
 
 %build
@@ -55,12 +63,17 @@ rm -rf %{buildroot}
 %{_mandir}/man*/*.*
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/%{name}/
 %{_datadir}/pixmaps/%{name}.png
 %{_datadir}/pixmaps/%{name}.svg
 %{python_sitelib}/%{name}*.egg-info
+%{python_sitelib}/%{name}/
 
 
 %changelog
+* Thu Jan 26 2012 Jason L Tibbitts III <tibbs@math.uh.edu> - 0.6.0-0.1.20120126svn64
+- Update to current SVN snapshot
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
