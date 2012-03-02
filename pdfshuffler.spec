@@ -39,7 +39,7 @@ pages using an interactive and intuitive graphical interface.
 
 %prep
 %setup -q -n pdfshuffler
-%patch0 -b .uilocation
+#%patch0 -b .uilocation
 
 
 %build
