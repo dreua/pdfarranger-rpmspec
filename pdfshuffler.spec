@@ -1,24 +1,13 @@
-%if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
-%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
-%endif
-
-%global svndate 20120302
-%global svnrev  64
-
 Name:           pdfshuffler
 Version:        0.6.0
-#Release:        1%{?dist}
-Release:        0.2.%{svndate}svn%{svnrev}%{?dist}
+Release:        1%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 Group:          Applications/Publishing
 License:        GPLv2+
 URL:            http://sourceforge.net/projects/pdfshuffler/
-#Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Source0:        pdfshuffler-%{svndate}svn.tar.xz
-Source1:        pdfshuffler-svn-checkout.sh
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:         pdfshuffler-ui-location.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)     
 BuildArch:      noarch
 
 BuildRequires:  python2-devel
@@ -30,35 +19,24 @@ Requires:       pygtk2
 Requires:       pyPdf
 Requires:       pypoppler
 
-
 %description
 PDF-Shuffler is a small python-gtk application, which helps the user
 to merge or split pdf documents and rotate, crop and rearrange their
 pages using an interactive and intuitive graphical interface.
 
-
 %prep
 %setup -q -n pdfshuffler
 %patch0 -b .uilocation
 
-
 %build
 %{__python} setup.py build
 
-
 %install
-rm -rf %{buildroot}
 %{__python} setup.py install --root %{buildroot}
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %find_lang %{name}
 
-
-%clean
-rm -rf %{buildroot}
-
-
 %files -f %{name}.lang
-%defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING README TODO
 %{_mandir}/man*/*.*
 %{_bindir}/%{name}
@@ -69,8 +47,11 @@ rm -rf %{buildroot}
 %{python_sitelib}/%{name}*.egg-info
 %{python_sitelib}/%{name}/
 
-
 %changelog
+* Wed Jun 26 2013 Fabian Affolter <mail@fabian-affolter.ch> - 0.6.0-1
+- Spec file cleaned
+- Switch to release package
+
 * Fri Feb 02 2012 Fabian Affolter <mail@fabian-affolter.ch>  - 0.6.0-0.2.20120302svn64
 - Minor changes
 
