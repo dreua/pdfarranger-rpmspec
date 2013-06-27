@@ -52,6 +52,12 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 - Spec file cleaned
 - Switch to release package
 
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.0-0.4.20120302svn64
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
+* Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.0-0.3.20120302svn64
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Fri Feb 02 2012 Fabian Affolter <mail@fabian-affolter.ch>  - 0.6.0-0.2.20120302svn64
 - Minor changes
 
