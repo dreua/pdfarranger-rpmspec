@@ -7,7 +7,6 @@ Group:          Applications/Publishing
 License:        GPLv2+
 URL:            http://sourceforge.net/projects/pdfshuffler/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Patch0:         pdfshuffler-ui-location.patch
 BuildArch:      noarch
 
 BuildRequires:  python2-devel
@@ -26,7 +25,6 @@ pages using an interactive and intuitive graphical interface.
 
 %prep
 %setup -q
-%patch0 -b .uilocation
 
 %build
 %{__python} setup.py build
@@ -36,19 +34,31 @@ pages using an interactive and intuitive graphical interface.
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %find_lang %{name}
 
+%post
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
 %files -f %{name}.lang
 %doc AUTHORS ChangeLog COPYING README TODO
 %{_mandir}/man*/*.*
 %{_bindir}/%{name}
+%{_datadir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/applications/%{name}/
 %{_datadir}/pixmaps/%{name}.png
-%{_datadir}/pixmaps/%{name}.svg
 %{python_sitelib}/%{name}*.egg-info
 %{python_sitelib}/%{name}/
 
 %changelog
 * Thu Aug 22 2013 Fabian Affolter <mail@fabian-affolter.ch> - 0.6.0-3
+- Patch removed
 - Rebuilt
 
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.0-2
