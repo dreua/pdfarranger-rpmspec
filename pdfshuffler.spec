@@ -25,7 +25,7 @@ to merge or split pdf documents and rotate, crop and rearrange their
 pages using an interactive and intuitive graphical interface.
 
 %prep
-%setup -q -n pdfshuffler
+%setup -q
 %patch0 -b .uilocation
 
 %build
