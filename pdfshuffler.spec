@@ -1,9 +1,8 @@
 Name:           pdfshuffler
 Version:        0.6.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
-Group:          Applications/Publishing
 License:        GPLv2+
 URL:            http://sourceforge.net/projects/pdfshuffler/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
@@ -27,10 +26,10 @@ pages using an interactive and intuitive graphical interface.
 %setup -q
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
 
 %install
-%{__python} setup.py install --root %{buildroot}
+%{__python2} setup.py install --root %{buildroot}
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %find_lang %{name}
 
@@ -41,10 +40,13 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
-%{python_sitelib}/%{name}*.egg-info
-%{python_sitelib}/%{name}/
+%{python2_sitelib}/%{name}*.egg-info
+%{python2_sitelib}/%{name}/
 
 %changelog
+* Mon Feb 17 2014 Fabian Affolter <mail@fabian-affolter.ch> - 0.6.0-4
+- Update macros
+
 * Thu Aug 22 2013 Fabian Affolter <mail@fabian-affolter.ch> - 0.6.0-3
 - Patch removed
 - Rebuilt
