@@ -1,6 +1,6 @@
 Name:           pdfshuffler
 Version:        0.6.0
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 License:        GPLv2+
@@ -33,17 +33,58 @@ pages using an interactive and intuitive graphical interface.
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %find_lang %{name}
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<!--
+BugReportURL: https://sourceforge.net/p/pdfshuffler/feature-requests/34/
+SentUpstream: 2014-09-17
+-->
+<application>
+  <id type="desktop">pdfshuffler.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <description>
+    <p>
+      PDF-Shuffler is a small application, which helps the user to merge or split pdf
+      documents and rotate, crop and rearrange their pages using an interactive and
+      intuitive graphical interface.
+      It is a frontend for python-pyPdf.
+    </p>
+    <!-- FIXME: Probably needs another paragraph or two -->
+  </description>
+  <url type="homepage">http://pdfshuffler.sourceforge.net/</url>
+  <screenshots>
+    <screenshot type="default">http://a.fsdn.com/con/app/proj/pdfshuffler/screenshots/181783.jpg/</screenshot>
+  </screenshots>
+  <!-- FIXME: change this to an upstream email address for spec updates
+  <updatecontact>someone_who_cares@upstream_project.org</updatecontact>
+   -->
+</application>
+EOF
+
 %files -f %{name}.lang
 %doc AUTHORS ChangeLog COPYING README TODO
 %{_mandir}/man*/*.*
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 %{python2_sitelib}/%{name}*.egg-info
 %{python2_sitelib}/%{name}/
 
 %changelog
+* Thu Mar 26 2015 Richard Hughes <rhughes@redhat.com> - 0.6.0-6
+- Add an AppData file for the software center
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
