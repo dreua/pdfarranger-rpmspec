@@ -1,6 +1,6 @@
 Name:           pdfshuffler
 Version:        0.6.0
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 License:        GPLv2+
@@ -14,7 +14,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 
 Requires:       pygtk2
-Requires:       pyPdf
+Requires:       python2-PyPDF2
 Requires:       pypoppler
 
 %description
@@ -71,7 +71,8 @@ SentUpstream: 2014-09-17
 EOF
 
 %files -f %{name}.lang
-%doc AUTHORS ChangeLog COPYING README TODO
+%doc AUTHORS ChangeLog README TODO
+%license COPYING
 %{_mandir}/man*/*.*
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
@@ -82,6 +83,9 @@ EOF
 %{python2_sitelib}/%{name}/
 
 %changelog
+* Mon Sep 10 2018 Fabian Affolter <mail@fabian-affolter.ch> - 0.6.0-15
+- Switch to PyPDF2 (rhbz#1592820)
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.6.0-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
