@@ -48,6 +48,8 @@ pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 %install
 %py3_install
 
+# Check fails with "(setup.py:18929): Gtk-WARNING **: 16:47:47.597: cannot open display"
+# Disabling for now
 #%check
 #%{__python3} setup.py test
 
@@ -57,6 +59,10 @@ pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 %doc README.md
 %{python3_sitelib}/%{srcname}-*.egg-info/
 %{python3_sitelib}/%{srcname}/
+%{_mandir}/man*/*.*
+%{_datadir}/appdata/%{srcname}.appdata.xml
+%{_datadir}/applications/%{srcname}.desktop
+%{_datadir}/%{srcname}/%{srcname}.ui
 %{_bindir}/pdfarranger
 
 %changelog
