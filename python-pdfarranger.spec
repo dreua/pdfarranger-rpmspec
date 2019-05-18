@@ -14,6 +14,9 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-distutils-extra
 BuildRequires:  intltool
 
+BuildRequires:  libappstream-glib
+BuildRequires:  desktop-file-utils
+
 %description
 pdfarranger is a small python-gtk application, which helps the user to merge 
 or split pdf documents and rotate, crop and rearrange their pages using an 
@@ -49,11 +52,17 @@ pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 
 %install
 %py3_install
+#%%find_lang %{name}
 
+# Fix metainfo location until https://github.com/jeromerobert/pdfarranger/pull/79 is merged
+mv %{buildroot}%{_datadir}/appdata %{buildroot}%{_metainfodir}
+
+%check
 # Check fails with "(setup.py:18929): Gtk-WARNING **: 16:47:47.597: cannot open display"
 # Disabling for now
-#%check
-#%{__python3} setup.py test
+#%%{__python3} setup.py test
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{srcname}.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 
 # Note that there is no %%files section for the unversioned python module
 %files -n python3-%{srcname}
@@ -62,7 +71,8 @@ pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 %{python3_sitelib}/%{srcname}-*.egg-info/
 %{python3_sitelib}/%{srcname}/
 %{_mandir}/man*/*.*
-%{_datadir}/appdata/%{srcname}.appdata.xml
+#%%{_datadir}/icons/*
+%{_metainfodir}/%{srcname}.appdata.xml
 %{_datadir}/applications/%{srcname}.desktop
 %{_datadir}/%{srcname}/%{srcname}.ui
 %{_bindir}/pdfarranger
