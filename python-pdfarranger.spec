@@ -2,7 +2,7 @@
 
 Name:           python-%{srcname}
 Version:        1.2.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 License:        GPLv3
@@ -14,14 +14,6 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-distutils-extra
 BuildRequires:  intltool
 
-Requires:       python3-PyPDF2
-
-# These seem to be included in the default desktop install
-Requires:       poppler-glib
-Requires:       python3-gobject
-Requires:       gtk3
-Requires:       python3-cairo
-
 %description
 pdfarranger is a small python-gtk application, which helps the user to merge 
 or split pdf documents and rotate, crop and rearrange their pages using an 
@@ -31,8 +23,17 @@ pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 
 %package -n python3-%{srcname}
 Summary:        %{summary}
-BuildRequires:  python3-devel
+
+Requires:       python3-PyPDF2
+
+# These seem to be included in the default desktop install
+Requires:       poppler-glib
+Requires:       python3-gobject
+Requires:       gtk3
+Requires:       python3-cairo
+
 %{?python_provide:%python_provide python3-%{srcname}}
+
 
 %description -n python3-%{srcname}
 pdfarranger is a small python-gtk application, which helps the user to merge 
@@ -67,6 +68,9 @@ pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 %{_bindir}/pdfarranger
 
 %changelog
+* Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-3
+- Move Requires to the right location
+
 * Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-2
 - Add missing requires
 
