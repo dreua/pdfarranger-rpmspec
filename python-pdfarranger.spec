@@ -3,7 +3,7 @@
 
 Name:           python-%{srcname}
 Version:        1.2.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 License:        GPLv3
@@ -23,9 +23,10 @@ BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
 
 %description
-pdfarranger is a small python-gtk application, which helps the user to merge 
-or split pdf documents and rotate, crop and rearrange their pages using an 
-interactive and intuitive graphical interface. It is a frontend for python-pyPdf.
+pdfarranger is a small Python GTK application, which helps the user to merge 
+or split PDF documents and rotate, crop and rearrange their pages using an 
+interactive and intuitive graphical interface. It is a front end for 
+python-pyPdf.
 pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 
 
@@ -35,7 +36,6 @@ Summary:        %{summary}
 Requires:       python3-PyPDF2
 
 # These seem to be included in the default desktop install
-Requires:       poppler-glib
 Requires:       python3-gobject
 Requires:       gtk3
 Requires:       python3-cairo
@@ -44,9 +44,10 @@ Requires:       python3-cairo
 
 
 %description -n python3-%{srcname}
-pdfarranger is a small python-gtk application, which helps the user to merge 
-or split pdf documents and rotate, crop and rearrange their pages using an 
-interactive and intuitive graphical interface. It is a frontend for python-pyPdf.
+pdfarranger is a small Python GTK application, which helps the user to merge 
+or split PDF documents and rotate, crop and rearrange their pages using an 
+interactive and intuitive graphical interface. It is a front end for 
+python-pyPdf.
 pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 
 %prep
@@ -79,6 +80,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 %{_bindir}/pdfarranger
 
 %changelog
+* Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-5
+- Fix rpmlint errors and warnings
+
 * Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-4
 - Buiding with wheel to get lang and icons right
 
