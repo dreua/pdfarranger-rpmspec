@@ -48,8 +48,8 @@ pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 %install
 %py3_install
 
-%check
-%{__python3} setup.py test
+#%check
+#%{__python3} setup.py test
 
 # Note that there is no %%files section for the unversioned python module
 %files -n python3-%{srcname}
@@ -60,6 +60,7 @@ pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 %{_bindir}/pdfarranger
 
 %changelog
-* Sa May 18 David Auer <dreua@posteo.de> - 1.2.1
+* Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1
 - Packaging pdfarranger based on pdfshuffler's spec file and https://docs.fedoraproject.org/en-US/packaging-guidelines/Python/#_example_python_spec_file
+
 
