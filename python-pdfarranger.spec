@@ -1,8 +1,9 @@
 %global srcname pdfarranger
+%global python3_wheelname %{srcname}-%{version}-py3-none-any.whl
 
 Name:           python-%{srcname}
 Version:        1.2.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 License:        GPLv3
@@ -13,7 +14,11 @@ BuildArch:      noarch
 BuildRequires:  python3-devel
 BuildRequires:  python3-distutils-extra
 BuildRequires:  intltool
+BuildRequires:  python3-wheel
+BuildRequires:  python3-pip
 
+
+# For checks only
 BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
 
@@ -48,36 +53,35 @@ pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 %autosetup -n %{srcname}-%{version}
 
 %build
-%py3_build
+%py3_build_wheel
 
 %install
-%py3_install
-#%%find_lang %{name}
+%py3_install_wheel %{python3_wheelname}
+%find_lang %{srcname}
 
 # Fix metainfo location until https://github.com/jeromerobert/pdfarranger/pull/79 is merged
 mv %{buildroot}%{_datadir}/appdata %{buildroot}%{_metainfodir}
 
 %check
-# Check fails with "(setup.py:18929): Gtk-WARNING **: 16:47:47.597: cannot open display"
-# Disabling for now
-#%%{__python3} setup.py test
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{srcname}.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 
-# Note that there is no %%files section for the unversioned python module
-%files -n python3-%{srcname}
+%files -n python3-%{srcname} -f %{srcname}.lang
 %license COPYING
 %doc README.md
-%{python3_sitelib}/%{srcname}-*.egg-info/
 %{python3_sitelib}/%{srcname}/
+%{python3_sitelib}/%{srcname}-%{version}.dist-info/
 %{_mandir}/man*/*.*
-#%%{_datadir}/icons/*
+%{_datadir}/icons/hicolor/*/apps/%{srcname}.*
 %{_metainfodir}/%{srcname}.appdata.xml
 %{_datadir}/applications/%{srcname}.desktop
 %{_datadir}/%{srcname}/%{srcname}.ui
 %{_bindir}/pdfarranger
 
 %changelog
+* Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-4
+- Buiding with wheel to get lang and icons right
+
 * Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-3
 - Move Requires to the right location
 
