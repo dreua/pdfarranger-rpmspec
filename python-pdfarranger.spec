@@ -10,11 +10,9 @@ URL:            https://github.com/jeromerobert/%{srcname}
 Source0:        %{url}/archive/%{version}.tar.gz
 BuildArch:      noarch
 
-#TODO
 BuildRequires:  python3-devel
-#BuildRequires:  python2-setuptools
-#BuildRequires:  desktop-file-utils
-#BuildRequires:  gettext
+BuildRequires:  python3-distutils-extra
+BuildRequires:  intltool
 
 #TODO
 #Requires:       pygtk2
