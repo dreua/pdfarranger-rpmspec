@@ -30,6 +30,10 @@ Requires:       python3-cairo
 
 %{?python_provide:%python_provide python3-%{srcname}}
 
+# For copr only, to upgrade pyhton(3)-pdfarranger to pdfarranger
+Provides: python3-pdfarranger = %{version}-%{release}
+Obsoletes: python3-pdfarranger < 1.2.1-6
+
 %description
 pdfarranger is a small Python GTK application, which helps the user to merge 
 or split PDF documents and rotate, crop and rearrange their pages using an 
@@ -73,6 +77,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 * Mon May 20 2019 David Auer <dreua@posteo.de> - 1.2.1-6
 - Name changed from python-pdfarranger to pdfarranger
 - Remove shebang in __main__.py
+- Copr only: Add Provides and Obsoletes for old name
 
 * Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-5
 - Fix rpmlint errors and warnings
