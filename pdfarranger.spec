@@ -1,9 +1,9 @@
 %global srcname pdfarranger
 %global python3_wheelname %{srcname}-%{version}-py3-none-any.whl
 
-Name:           python-%{srcname}
+Name:           %{srcname}
 Version:        1.2.1
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 License:        GPLv3
@@ -17,21 +17,9 @@ BuildRequires:  intltool
 BuildRequires:  python3-wheel
 BuildRequires:  python3-pip
 
-
 # For checks only
 BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
-
-%description
-pdfarranger is a small Python GTK application, which helps the user to merge 
-or split PDF documents and rotate, crop and rearrange their pages using an 
-interactive and intuitive graphical interface. It is a front end for 
-python-pyPdf.
-pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
-
-
-%package -n python3-%{srcname}
-Summary:        %{summary}
 
 Requires:       python3-PyPDF2
 
@@ -42,16 +30,18 @@ Requires:       python3-cairo
 
 %{?python_provide:%python_provide python3-%{srcname}}
 
-
-%description -n python3-%{srcname}
+%description
 pdfarranger is a small Python GTK application, which helps the user to merge 
 or split PDF documents and rotate, crop and rearrange their pages using an 
 interactive and intuitive graphical interface. It is a front end for 
-python-pyPdf.
-pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
+python-PyPDF2.
+pdfarranger is a fork of Konstantinos Poulios's PDF-Shuffler.
 
 %prep
 %autosetup -n %{srcname}-%{version}
+
+# Remove wrong and unneccessary shebang until https://github.com/jeromerobert/pdfarranger/pull/80 is released
+sed -i '/#\!/d' pdfarranger/__main__.py
 
 %build
 %py3_build_wheel
@@ -60,14 +50,14 @@ pdfarranger is a fork of Konstantinos Poulios's pdfshuffler.
 %py3_install_wheel %{python3_wheelname}
 %find_lang %{srcname}
 
-# Fix metainfo location until https://github.com/jeromerobert/pdfarranger/pull/79 is merged
+# Fix metainfo location until https://github.com/jeromerobert/pdfarranger/pull/79 is released
 mv %{buildroot}%{_datadir}/appdata %{buildroot}%{_metainfodir}
 
 %check
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{srcname}.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 
-%files -n python3-%{srcname} -f %{srcname}.lang
+%files -f %{srcname}.lang
 %license COPYING
 %doc README.md
 %{python3_sitelib}/%{srcname}/
@@ -80,6 +70,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 %{_bindir}/pdfarranger
 
 %changelog
+* Mon May 20 2019 David Auer <dreua@posteo.de> - 1.2.1-6
+- Name changed from python-pdfarranger to pdfarranger
+- Remove shebang in __main__.py
+
 * Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-5
 - Fix rpmlint errors and warnings
 
