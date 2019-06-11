@@ -1,11 +1,11 @@
 Name:           pdfarranger
 Version:        1.2.1
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 License:        GPLv3
 URL:            https://github.com/jeromerobert/%{name}
-Source0:        %{url}/archive/%{version}.tar.gz
+Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
@@ -69,6 +69,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 %{_bindir}/pdfarranger
 
 %changelog
+* Tue Jun 11 2019 David Auer <dreua@posteo.de> - 1.2.1-8
+- Better source URL
+
 * Mon May 20 2019 David Auer <dreua@posteo.de> - 1.2.1-7
 - Fix directory ownership
 - Replace obsolete srcname by name
