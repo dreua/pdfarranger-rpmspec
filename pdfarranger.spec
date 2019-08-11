@@ -1,14 +1,11 @@
-%global srcname pdfarranger
-%global python3_wheelname %{srcname}-%{version}-py3-none-any.whl
-
-Name:           %{srcname}
-Version:        1.2.1
-Release:        6%{?dist}
+Name:           pdfarranger
+Version:        1.3.0
+Release:        1%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 License:        GPLv3
-URL:            https://github.com/jeromerobert/%{srcname}
-Source0:        %{url}/archive/%{version}.tar.gz
+URL:            https://github.com/jeromerobert/%{name}
+Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
@@ -28,7 +25,9 @@ Requires:       python3-gobject
 Requires:       gtk3
 Requires:       python3-cairo
 
-%{?python_provide:%python_provide python3-%{srcname}}
+%{?python_provide:%python_provide python3-%{name}}
+
+%global python3_wheelname %{name}-%{version}-py3-none-any.whl
 
 # For copr only, to upgrade pyhton(3)-pdfarranger to pdfarranger
 Provides: python3-pdfarranger = %{version}-%{release}
@@ -42,38 +41,43 @@ python-PyPDF2.
 pdfarranger is a fork of Konstantinos Poulios's PDF-Shuffler.
 
 %prep
-%autosetup -n %{srcname}-%{version}
-
-# Remove wrong and unneccessary shebang until https://github.com/jeromerobert/pdfarranger/pull/80 is released
-sed -i '/#\!/d' pdfarranger/__main__.py
+%autosetup -n %{name}-%{version}
 
 %build
 %py3_build_wheel
 
 %install
 %py3_install_wheel %{python3_wheelname}
-%find_lang %{srcname}
-
-# Fix metainfo location until https://github.com/jeromerobert/pdfarranger/pull/79 is released
-mv %{buildroot}%{_datadir}/appdata %{buildroot}%{_metainfodir}
+%find_lang %{name}
 
 %check
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{srcname}.desktop
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 
-%files -f %{srcname}.lang
+%files -f %{name}.lang
 %license COPYING
 %doc README.md
-%{python3_sitelib}/%{srcname}/
-%{python3_sitelib}/%{srcname}-%{version}.dist-info/
+%{python3_sitelib}/%{name}/
+%{python3_sitelib}/%{name}-%{version}.dist-info/
 %{_mandir}/man*/*.*
-%{_datadir}/icons/hicolor/*/apps/%{srcname}.*
-%{_metainfodir}/%{srcname}.appdata.xml
-%{_datadir}/applications/%{srcname}.desktop
-%{_datadir}/%{srcname}/%{srcname}.ui
+%{_datadir}/icons/hicolor/*/apps/%{name}.*
+%{_metainfodir}/%{name}.appdata.xml
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/%{name}/
 %{_bindir}/pdfarranger
 
 %changelog
+* Sun Aug 11 2019 David Auer <dreua@posteo.de> - 1.3.0-1
+- New version, see https://github.com/jeromerobert/pdfarranger/releases/tag/1.3.0
+- Removed obsolete downstream fixes 
+
+* Tue Jun 11 2019 David Auer <dreua@posteo.de> - 1.2.1-8
+- Better source URL
+
+* Mon May 20 2019 David Auer <dreua@posteo.de> - 1.2.1-7
+- Fix directory ownership
+- Replace obsolete srcname by name
+
 * Mon May 20 2019 David Auer <dreua@posteo.de> - 1.2.1-6
 - Name changed from python-pdfarranger to pdfarranger
 - Remove shebang in __main__.py
