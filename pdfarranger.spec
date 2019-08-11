@@ -1,6 +1,6 @@
 Name:           pdfarranger
-Version:        1.2.1
-Release:        8%{?dist}
+Version:        1.3.0
+Release:        1%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
 License:        GPLv3
@@ -39,18 +39,12 @@ pdfarranger is a fork of Konstantinos Poulios's PDF-Shuffler.
 %prep
 %autosetup -n %{name}-%{version}
 
-# Remove wrong and unneccessary shebang until https://github.com/jeromerobert/pdfarranger/pull/80 is released
-sed -i '/#\!/d' pdfarranger/__main__.py
-
 %build
 %py3_build_wheel
 
 %install
 %py3_install_wheel %{python3_wheelname}
 %find_lang %{name}
-
-# Fix metainfo location until https://github.com/jeromerobert/pdfarranger/pull/79 is released
-mv %{buildroot}%{_datadir}/appdata %{buildroot}%{_metainfodir}
 
 %check
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
@@ -69,6 +63,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 %{_bindir}/pdfarranger
 
 %changelog
+* Sun Aug 11 2019 David Auer <dreua@posteo.de> - 1.3.0-1
+- New version, see https://github.com/jeromerobert/pdfarranger/releases/tag/1.3.0
+- Removed obsolete downstream fixes 
+
 * Tue Jun 11 2019 David Auer <dreua@posteo.de> - 1.2.1-8
 - Better source URL
 
