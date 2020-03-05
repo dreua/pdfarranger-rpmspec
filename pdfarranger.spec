@@ -1,131 +1,58 @@
 Name:           pdfarranger
 Version:        1.4.1
-Release:        1%{?dist}
+Release:        1
 Summary:        PDF file merging, rearranging, and splitting
-
+Group:          Publishing
 License:        GPLv3
-URL:            https://github.com/jeromerobert/%{name}
-Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+URL:            https://github.com/jeromerobert/pdfarranger
+Source0:        https://github.com/jeromerobert/pdfarranger/archive/%{version}/%{name}-%{version}.tar.gz
 BuildArch:      noarch
-
-BuildRequires:  python3-devel
+BuildRequires:  pkgconfig(python3)
+BuildRequires:  python3-setuptools
 BuildRequires:  python3-distutils-extra
-BuildRequires:  python3-wheel
-BuildRequires:  python3-pip
-
-# For checks only
-#BuildRequires:  libappstream-glib
-#BuildRequires:  desktop-file-utils
-
-Requires:       python3-pikepdf
-
-# These seem to be included in the default desktop install
+BuildRequires:  gettext
+BuildRequires:  intltool
 Requires:       python3-gobject
-Requires:       gtk3
+Requires:       python3-PyPDF2
 Requires:       python3-cairo
-Requires:       poppler-glib
-
-%if 0%{?fedora} > 31
-# replace pdfshuffler for Fedora 32+ since it is python2 only (#1738935)
-Provides:       pdfshuffler = %{version}-%{release}
-# Current pdfshuffler is 0.6.0-17. I obsolete everything < 0.6.1 here
-# because there might be new releases but they won't add python3 support.
-Obsoletes:      pdfshuffler < 0.6.1-1
-%endif
-
-
-%global python3_wheelname %{name}-%{version}-py3-none-any.whl
 
 %description
-pdfarranger is a small Python GTK application, which helps the user to merge 
-or split PDF documents and rotate, crop and rearrange their pages using an 
-interactive and intuitive graphical interface. It is a front end for 
-python-PyPDF2.
-pdfarranger is a fork of Konstantinos Poulios's PDF-Shuffler.
+PDFArranger is a small python-gtk application, which helps the user
+to merge or split pdf documents and rotate, crop and rearrange their
+pages using an interactive and intuitive graphical interface.
+
+The tool, which is a graphical front-end for PyPDF2, is a fork of
+PDF-Shuffler that aims to "make the project a bit more active".
 
 %prep
-%autosetup -n %{name}-%{version}
+%setup -q
+%autopatch -p1
 
-# py3_build / py3_install do not work with this setup.py but building
-# a wheel works just fine
 %build
-%py3_build_wheel
+%py3_build
 
 %install
-%py3_install_wheel %{python3_wheelname}
-%find_lang %{name}
-%if 0%{?fedora} > 31
-ln -s %{_bindir}/pdfarranger %{buildroot}%{_bindir}/pdfshuffler
-%endif
+python3 setup.py install --root %{buildroot}
 
-%check
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
+%find_lang %{name}
 
 %files -f %{name}.lang
-%license COPYING
 %doc README.md
-%{python3_sitelib}/%{name}/
-%{python3_sitelib}/%{name}-%{version}.dist-info/
-%{_mandir}/man*/*.*
-%{_datadir}/icons/hicolor/*/apps/%{name}.*
-%{_metainfodir}/%{name}.appdata.xml
+%license COPYING
+%{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/%{name}/
-%{_bindir}/pdfarranger
-%if 0%{?fedora} > 31
-%{_bindir}/pdfshuffler
-%endif
+%{_datadir}/metainfo/%{name}.appdata.xml
+%{_mandir}/man1/%{name}.1.*
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/%{name}.ui
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+%{python3_sitelib}/%{name}/
+%{python3_sitelib}/%{name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
-* Sun Feb 09 2020 Fedora Release Monitoring <release-monitoring@fedoraproject.org> - 1.4.1-1
-- Update to 1.4.1 (#1800993)
-
-* Sat Feb 01 2020 David Auer <dreua@posteo.de> - 1.4.0-1
-- New version, see https://github.com/jeromerobert/pdfarranger/releases/tag/1.4.0
-- Replace python3-PyPDF2 with python3-pikepdf
-
-* Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.1-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
-
-* Wed Sep 25 2019 David Auer <dreua@posteo.de> - 1.3.1-2
-- replace pdfshuffler on f32+
-
-* Sun Sep 22 2019 David Auer <dreua@posteo.de> - 1.3.1-1
-- New version, see https://github.com/jeromerobert/pdfarranger/releases/tag/1.3.1
-
-* Wed Sep 11 2019 David Auer <dreua@posteo.de> - 1.3.0-2
-- Add missing dependency
-- Remove unnecessary python_provide makro
-
-* Sun Aug 11 2019 David Auer <dreua@posteo.de> - 1.3.0-1
-- New version, see https://github.com/jeromerobert/pdfarranger/releases/tag/1.3.0
-- Remove obsolete downstream fixes 
-
-* Tue Jun 11 2019 David Auer <dreua@posteo.de> - 1.2.1-8
-- Better source URL
-
-* Mon May 20 2019 David Auer <dreua@posteo.de> - 1.2.1-7
-- Fix directory ownership
-- Replace obsolete srcname by name
-
-* Mon May 20 2019 David Auer <dreua@posteo.de> - 1.2.1-6
-- Name changed from python-pdfarranger to pdfarranger
-- Remove shebang in __main__.py
-
-* Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-5
-- Fix rpmlint errors and warnings
-
-* Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-4
-- Buiding with wheel to get lang and icons right
-
-* Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-3
-- Move Requires to the right location
-
-* Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1-2
-- Add missing requires
-
-* Sat May 18 2019 David Auer <dreua@posteo.de> - 1.2.1
-- Packaging pdfarranger based on pdfshuffler's spec file and https://docs.fedoraproject.org/en-US/packaging-guidelines/Python/#_example_python_spec_file
-
-
+* Mon Dec 17 2018 Wei-Lun Chao <bluebat@member.fsf.org> - 1.1
+- Rebuild for Fedora
+* Sun Dec 16 2018 daviddavid <daviddavid> 1.1-1.mga7
++ Revision: 1341749
+- initial package pdfarranger
