@@ -1,5 +1,5 @@
 Name:           pdfarranger
-Version:        1.3.0
+Version:        1.4.1
 Release:        1%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 
@@ -10,7 +10,6 @@ BuildArch:      noarch
 
 BuildRequires:  python3-devel
 BuildRequires:  python3-distutils-extra
-BuildRequires:  intltool
 BuildRequires:  python3-wheel
 BuildRequires:  python3-pip
 
@@ -18,14 +17,22 @@ BuildRequires:  python3-pip
 BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
 
-Requires:       python3-PyPDF2
+Requires:       python3-pikepdf
 
 # These seem to be included in the default desktop install
 Requires:       python3-gobject
 Requires:       gtk3
 Requires:       python3-cairo
+Requires:       poppler-glib
 
-%{?python_provide:%python_provide python3-%{name}}
+%if 0%{?fedora} > 31
+# replace pdfshuffler for Fedora 32+ since it is python2 only (#1738935)
+Provides:       pdfshuffler = %{version}-%{release}
+# Current pdfshuffler is 0.6.0-17. I obsolete everything < 0.6.1 here
+# because there might be new releases but they won't add python3 support.
+Obsoletes:      pdfshuffler < 0.6.1-1
+%endif
+
 
 %global python3_wheelname %{name}-%{version}-py3-none-any.whl
 
@@ -39,12 +46,17 @@ pdfarranger is a fork of Konstantinos Poulios's PDF-Shuffler.
 %prep
 %autosetup -n %{name}-%{version}
 
+# py3_build / py3_install do not work with this setup.py but building
+# a wheel works just fine
 %build
 %py3_build_wheel
 
 %install
 %py3_install_wheel %{python3_wheelname}
 %find_lang %{name}
+%if 0%{?fedora} > 31
+ln -s %{_bindir}/pdfarranger %{buildroot}%{_bindir}/pdfshuffler
+%endif
 
 %check
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
@@ -61,11 +73,34 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/
 %{_bindir}/pdfarranger
+%if 0%{?fedora} > 31
+%{_bindir}/pdfshuffler
+%endif
 
 %changelog
+* Sun Feb 09 2020 Fedora Release Monitoring <release-monitoring@fedoraproject.org> - 1.4.1-1
+- Update to 1.4.1 (#1800993)
+
+* Sat Feb 01 2020 David Auer <dreua@posteo.de> - 1.4.0-1
+- New version, see https://github.com/jeromerobert/pdfarranger/releases/tag/1.4.0
+- Replace python3-PyPDF2 with python3-pikepdf
+
+* Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
+* Wed Sep 25 2019 David Auer <dreua@posteo.de> - 1.3.1-2
+- replace pdfshuffler on f32+
+
+* Sun Sep 22 2019 David Auer <dreua@posteo.de> - 1.3.1-1
+- New version, see https://github.com/jeromerobert/pdfarranger/releases/tag/1.3.1
+
+* Wed Sep 11 2019 David Auer <dreua@posteo.de> - 1.3.0-2
+- Add missing dependency
+- Remove unnecessary python_provide makro
+
 * Sun Aug 11 2019 David Auer <dreua@posteo.de> - 1.3.0-1
 - New version, see https://github.com/jeromerobert/pdfarranger/releases/tag/1.3.0
-- Removed obsolete downstream fixes 
+- Remove obsolete downstream fixes 
 
 * Tue Jun 11 2019 David Auer <dreua@posteo.de> - 1.2.1-8
 - Better source URL
