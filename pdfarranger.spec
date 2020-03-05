@@ -14,8 +14,8 @@ BuildRequires:  python3-wheel
 BuildRequires:  python3-pip
 
 # For checks only
-BuildRequires:  libappstream-glib
-BuildRequires:  desktop-file-utils
+#BuildRequires:  libappstream-glib
+#BuildRequires:  desktop-file-utils
 
 Requires:       python3-pikepdf
 
