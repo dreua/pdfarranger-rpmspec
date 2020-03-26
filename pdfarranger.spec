@@ -1,5 +1,5 @@
 Name:           pdfarranger
-Version:        1.4.1
+Version:        1.4.2
 Release:        1
 Summary:        PDF file merging, rearranging, and splitting
 Group:          Publishing
@@ -12,9 +12,10 @@ BuildRequires:  python3-setuptools
 BuildRequires:  python3-distutils-extra
 BuildRequires:  gettext
 BuildRequires:  intltool
-Requires:       python3-gobject
-Requires:       python3-PyPDF2
 Requires:       python3-cairo
+Requires:       python3-gobject
+Requires:       python3-pikepdf
+Requires:       typelib-1_0-Poppler-0_18
 
 %description
 PDFArranger is a small python-gtk application, which helps the user
@@ -51,8 +52,14 @@ python3 setup.py install --root %{buildroot}
 %{python3_sitelib}/%{name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
+* Thu Mar 26 2020 David Auer <dreua@posteo.de> - 1.4.2-1
+- Update to 1.4.2
+- Rebuilt needed for Pyhthon 3.8 update in copr
+- Fix requires pikepdf, typelib-1_0-Poppler-0_18
+
 * Mon Dec 17 2018 Wei-Lun Chao <bluebat@member.fsf.org> - 1.1
 - Rebuild for Fedora
 * Sun Dec 16 2018 daviddavid <daviddavid> 1.1-1.mga7
 + Revision: 1341749
 - initial package pdfarranger
+
