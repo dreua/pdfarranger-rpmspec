@@ -1,6 +1,6 @@
 Name:           pdfarranger
 Version:        1.6.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 Group:          Publishing
 License:        GPLv3
@@ -16,6 +16,7 @@ Requires:       python3-cairo
 Requires:       python3-gobject
 Requires:       python3-pikepdf
 Requires:       typelib-1_0-Poppler-0_18
+Recommends:     python3-img2pdf >= 0.3.4
 
 %global app_id com.github.jeromerobert.pdfarranger
 
@@ -54,6 +55,9 @@ python3 setup.py install --root %{buildroot}
 %{python3_sitelib}/%{name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
+* Thu Jul 16 2020 David Auer <dreua@posteo.de> - 1.6.0-2
+- Recommend img2pdf
+
 * Wed Jul 15 2020 David Auer <dreua@posteo.de> - 1.6.0-1
 - Update to 1.6.0
 
