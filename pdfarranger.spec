@@ -1,6 +1,6 @@
 Name:           pdfarranger
-Version:        1.6.0
-Release:        2%{?dist}
+Version:        1.6.2
+Release:        1%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 Group:          Publishing
 License:        GPLv3
@@ -55,6 +55,9 @@ python3 setup.py install --root %{buildroot}
 %{python3_sitelib}/%{name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
+* Sat Aug 01 2020 David Auer <dreua@posteo.de> - 1.6.2-1
+- Update to 1.6.2
+
 * Thu Jul 16 2020 David Auer <dreua@posteo.de> - 1.6.0-2
 - Recommend img2pdf
 
