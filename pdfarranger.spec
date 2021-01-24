@@ -1,5 +1,5 @@
 Name:           pdfarranger
-Version:        1.6.2
+Version:        1.7.0
 Release:        1%{?dist}
 Summary:        PDF file merging, rearranging, and splitting
 Group:          Publishing
@@ -55,6 +55,9 @@ python3 setup.py install --root %{buildroot}
 %{python3_sitelib}/%{name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
+* Sun Jan 24 2021 David Auer <dreua@posteo.de> - 1.7.0-1
+- Update to 1.7.0
+
 * Sat Aug 01 2020 David Auer <dreua@posteo.de> - 1.6.2-1
 - Update to 1.6.2
 
